@@ -1,0 +1,40 @@
+# [LeetCode] 121. Best Time to Buy and Sell Stock(Easy)
+
+- **Link:** [LeetCode Problem Link](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/?envType=study-plan-v2&envId=top-interview-150)
+- **Tags:** `Array`, `Dynamic Programming`,
+- **Difficulty:** Easy
+
+## 題目解釋
+
+會得到一個陣列 `prices` 其中 `price[i]` 代表第 `i` 天的股價，找出在最低點買，最高點賣所能獲得的最大利潤。
+
+
+## 解法思路
+
+### 解法一：Greedy
+> [!IMPORTANT]
+> **思路：**
+> 歷遍整個陣列的同時，紀錄目前所遇到過的 `歷史最低價` ，並且永遠假設自己是在 `歷史最低價` 購入，再用 `今天的價格` 減去 `歷史最低價` 看是否比之前的利潤更高。
+> 
+- **時間複雜度:** $O(n)$ - 只需歷遍陣列一次
+- **空間複雜度:** $O(1)$ - 只用到常數個變數
+
+```cpp=
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int min_price = prices[0];
+        int max_profit = 0;
+        for(int price : prices){
+            //Greedy:持續記錄歷遍過的最低價格
+            min_price = min(min_price, price);
+            
+            //每天都計算今天賣出的利潤，看利潤是否創新高
+            max_profit = max(max_profit, price - min_price);
+        }
+        return max_profit;
+    }
+};
+```
+
+
